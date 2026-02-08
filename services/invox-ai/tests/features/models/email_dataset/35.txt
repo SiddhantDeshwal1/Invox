@@ -1,0 +1,16 @@
+Subject: Your E-Ticket for travel from London to Paris
+
+Dear Gina,
+
+Your upcoming journey with EuroRail is confirmed.
+
+-   **Train:** ER 9021
+-   **Date:** February 28, 2026
+-   **Departure:** London St. Pancras Int'l at 11:30
+-   **Arrival:** Paris Gare du Nord at 14:47
+-   **Coach:** 11, Seat: 45
+
+Your e-ticket is attached as a PDF. Please have it ready for inspection on the train.
+
+Bon voyage!
+EuroRail Customer Team

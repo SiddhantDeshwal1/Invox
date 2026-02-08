@@ -1,0 +1,11 @@
+Subject: [Downtime Notification] Scheduled Maintenance on Feb 15
+
+Hello,
+
+Please be advised that we have scheduled maintenance for our main servers on **February 15, 2026, from 2:00 AM to 4:00 AM UTC**.
+
+During this time, our services may be intermittently unavailable. We apologize for any inconvenience this may cause. This maintenance is necessary to improve our system's performance and reliability.
+
+Thank you for your understanding.
+The Operations Team
+ops@serviceprovider.com

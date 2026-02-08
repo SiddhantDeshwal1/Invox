@@ -1,0 +1,13 @@
+Subject: EMI Payment Reminder for your Car Loan
+
+Dear Brian,
+
+This is a reminder that your next EMI payment for your car loan account (ending in 5555) is scheduled for automatic debit on February 15, 2026.
+
+-   **EMI Amount:** $350.00
+
+Please ensure you have sufficient funds in your linked bank account to avoid any processing failures.
+
+Regards,
+AutoFinance Corp.
+Customer Service

@@ -1,0 +1,13 @@
+Subject: Your Weekly Learning Digest
+
+Hi learner,
+
+Here's your weekly digest of top articles and courses to help you stay ahead in your field:
+
+1.  **Article:** 5 Habits of Highly Effective Programmers
+2.  **Course:** Advanced CSS and Sass: Flexbox, Grid, Animations and More!
+3.  **Video:** A 10-Minute Guide to Understanding APIs
+
+Keep learning,
+The KnowledgeUp Team
+digest@knowledgeup.io

@@ -1,0 +1,17 @@
+Subject: Your Flight Itinerary: SFO to NYC on Feb 20
+
+Dear Clara Oswald,
+
+Your booking is confirmed! Thank you for choosing SkyHigh Airlines.
+
+**Flight Details:**
+-   **Flight Number:** SH 256
+-   **Date:** February 20, 2026
+-   **Departure:** San Francisco (SFO) at 8:00 AM
+-   **Arrival:** New York (JFK) at 4:30 PM
+-   **Seat:** 22A
+
+Please check in online 24 hours before your flight. You can manage your booking and find more information on our website.
+
+Safe travels,
+SkyHigh Airlines

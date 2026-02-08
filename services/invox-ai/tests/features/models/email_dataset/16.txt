@@ -1,0 +1,16 @@
+Subject: Your recent cryptocurrency purchase
+
+Hi Olivia,
+
+This email confirms your recent purchase on CryptoEX.
+
+**Transaction Details:**
+-   **Amount:** 0.05 BTC
+-   **Price:** $50,000 USD per BTC
+-   **Total Cost:** $2,500.00 USD
+-   **Date:** February 8, 2026, 10:30 AM UTC
+
+Your new balance is reflected in your wallet. For your security, we will never ask for your password or private keys.
+
+The CryptoEX Team
+support@cryptoex.io

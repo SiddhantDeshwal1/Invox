@@ -1,0 +1,16 @@
+Subject: Your order #A123-4567 has shipped!
+
+Hi Sam Taylor,
+
+Great news! Your order from GadgetHub has been shipped.
+
+It's on its way to you and should arrive within 3-5 business days. You can track your package using the tracking number below.
+
+**Tracking Number:** 1Z999AA10123456789
+
+[Track Your Shipment Button]
+
+We can't wait for you to receive your new gadgets!
+
+Best,
+The GadgetHub Team

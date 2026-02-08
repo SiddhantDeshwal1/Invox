@@ -1,0 +1,18 @@
+Subject: Refund Processed for Order #B987-6543
+
+Dear Umar Vance,
+
+We have processed a refund for your recent return.
+
+**Refund Details:**
+-   **Order Number:** B987-6543
+-   **Refund Amount:** $49.99
+-   **Original Payment Method:** MasterCard ending in 5544
+
+Please allow 3-5 business days for the refund to appear on your statement.
+
+If you have any questions, please contact our support team.
+
+Sincerely,
+StyleNow Fashion
+customerservice@stylenow.com
