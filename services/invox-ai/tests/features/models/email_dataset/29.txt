@@ -1,0 +1,14 @@
+Subject: Reminder: Your Rent Payment is Due Soon
+
+Dear Alice,
+
+This is a friendly reminder that your rent payment for the apartment at 123 Main Street, Apt 4B, is due on March 1, 2026.
+
+-   **Rent Amount:** $1,800.00
+
+Please ensure your payment is made on or before the due date to avoid late fees. You can pay via the online tenant portal.
+
+If you have any questions, please don't hesitate to reach out.
+
+Best,
+Your Property Management

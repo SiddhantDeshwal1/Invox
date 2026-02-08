@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "invox-ai"
+version = "0.1.0"
+description = "AI services for Invox"
+authors = [{name = "Invox Team", email = "dev@invox.com"}]
+dependencies = [
+    "transformers",
+    "torch",
+    "scikit-learn",
+    "sentence-transformers"
+]
+requires-python = ">=3.9"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,15 @@
+Subject: Your monthly electricity bill is here
+
+Dear Customer,
+
+Your electricity bill for the period ending January 31, 2026, is now ready.
+
+-   **Account Number:** 987654321
+-   **Amount Due:** $75.50
+-   **Due Date:** February 20, 2026
+
+To view the detailed bill and make a payment, please log in to your online account.
+
+Thank you,
+City Power & Light
+billing@citypower.com
