@@ -1,55 +1,94 @@
+#!/usr/bin/env python3
 import sys
-import torch
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-from invox.features.email_classification.categories import LABELS
+import os
+import traceback
+
+# ===== GLOBAL TOKEN & VERBOSE CONFIG =====
+# Removed all silencing logic. Hugging Face will now log natively.
+os.environ["HF_TOKEN"] = "REMOVED"
+
+# Force transformers to show info (loading weights, etc.)
+from transformers import logging as hf_logging
+
+hf_logging.set_verbosity_info()
+
+print("\n" + "=" * 50)
+print("⚙️  INITIALIZING INVOX AI CLASSIFICATION PIPELINE")
+print("=" * 50)
+
+try:
+    print("[INIT] Loading Spam Detection Module...")
+    from invox.features.email_classification.spam_detection import check_is_spam
+
+    print("[INIT] Loading Category Detection Module...")
+    from invox.features.email_classification.category_detection import (
+        classify_hierarchical,
+    )
+
+    print("[INIT] All modules loaded successfully!\n")
+except Exception as e:
+    print("cat: Error\nsubcat: ImportFailure")
+    print(f"\n--- FATAL IMPORT ERROR ---\n{traceback.format_exc()}", file=sys.stderr)
+    sys.exit(1)
 
 
-def classify(file_path):
-    model_name = "google/flan-t5-large"
-
-    # Load tokenizer and model
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-
-    # Use GPU if available, otherwise CPU
-    device_map = "auto" if torch.cuda.is_available() else "cpu"
-
-    print(f"Loading {model_name}...")
-    model = AutoModelForSeq2SeqLM.from_pretrained(model_name, device_map=device_map)
-
+def process_email_classification(email_text: str) -> str:
     try:
-        with open(file_path, "r") as f:
-            # T5 has a token limit of 512, but can handle slightly more input safely.
-            # We truncate char count to 2500 to stay within safe bounds.
-            text = f.read()[:2500]
-    except FileNotFoundError:
-        return "Error: File not found."
+        print("\n" + "-" * 40)
+        print("🛡️  RUNNING SPAM DETECTION")
+        print("-" * 40)
 
-    # Join labels for the prompt
-    labels_str = ", ".join(LABELS)
+        is_spam = check_is_spam(email_text)
 
-    # --- THE FIX: Use Triple Quotes (""") for multi-line strings ---
-    prompt = f"""Classify the email below into one of these categories: 
-{labels_str}
+        print(
+            f"✅ Successfully executed Spam Detection. Result: {'SPAM' if is_spam else 'HAM'}"
+        )
 
-Email:
-{text}
+        if is_spam:
+            print("🛑 Halting pipeline early due to Spam.")
+            return "cat: Spam\nsubcat: Spam"
 
-Category:"""
+        print("\n" + "-" * 40)
+        print("🧠 RUNNING CATEGORY DETECTION (GEMMA 2)")
+        print("-" * 40)
 
-    # Tokenize
-    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+        parent, child = classify_hierarchical(email_text)
 
-    # Generate response
-    outputs = model.generate(**inputs, max_new_tokens=50)
+        print("✅ Successfully executed Category Detection.")
 
-    # Decode
-    prediction = tokenizer.decode(outputs[0], skip_special_tokens=True).strip()
+        print("\n" + "=" * 50)
+        print("🎯 FINAL OUTPUT FORMATTED")
+        print("=" * 50)
+        return f"cat: {parent}\nsubcat: {child}"
 
-    return f"tag: [{prediction}]"
+    except Exception as e:
+        print(
+            f"\n--- FATAL PIPELINE ERROR ---\n{traceback.format_exc()}", file=sys.stderr
+        )
+        return "cat: Error\nsubcat: RuntimeFailure"
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python flan-t5-large.py <email.txt>")
-    else:
-        print(classify(sys.argv[1]))
+        print("cat: Error\nsubcat: NoInputFile")
+        sys.exit(1)
+
+    file_path = sys.argv[1]
+
+    if not os.path.exists(file_path):
+        print("cat: Error\nsubcat: FileNotFound")
+        sys.exit(1)
+
+    try:
+        print(f"\n📂 Reading input file: {file_path}")
+        with open(file_path, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        final_output = process_email_classification(content)
+
+        # This clean output string goes right to the terminal at the very end
+        print("\n" + final_output + "\n")
+
+    except Exception as e:
+        print(f"\n--- FATAL FILE ERROR ---\n{traceback.format_exc()}", file=sys.stderr)
+        print("cat: Error\nsubcat: RuntimeFailure")

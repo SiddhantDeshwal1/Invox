@@ -1,0 +1,200 @@
+Promotions,Giveaways
+Purchases,Orders
+Security,OTP & 2FA
+Travel,Flights
+Extra,Health & Medical
+Finance,Bills & Utilities
+Work,Projects
+Work,External
+Finance,Investments
+Finance,Investments
+Education,Extra
+Spam,Phishing
+Social,Community
+Travel,Itineraries
+Travel,Rewards
+Travel,Transit
+Social,Dating
+Social,Personal
+Travel,Accommodations
+Finance,Insurance
+Promotions,Newsletters
+Security,Licenses
+Work,Team & Admin
+Extra,Legal & Civic
+Extra,Legal & Civic
+Extra,Real Estate
+Spam,Fake Invoices
+Security,Licenses
+Extra,Fitness
+Work,Meetings
+Spam,Phishing
+Finance,Bills & Utilities
+Purchases,Extra
+Promotions,Newsletters
+Work,Infrastructure
+Promotions,Fundraising
+Work,Job Search
+Travel,Visas
+Promotions,Sales
+Education,Courses
+Security,Privacy
+Finance,Loans
+Travel,Itineraries
+Promotions,Product Updates
+Extra,Fitness
+Promotions,Fundraising
+Security,Privacy
+Extra,Hobbies
+Finance,Extra
+Work,Projects
+Education,Seminars
+Purchases,Extra
+Promotions,Newsletters
+Purchases,Subscriptions
+Finance,Bills & Utilities
+Work,Extra
+Education,Certifications
+Travel,Flights
+Education,Research
+Purchases,Orders
+Social,Events
+Education,Seminars
+Education,Research
+Spam,Malware
+Work,Extra
+Social,Platforms
+Security,Extra
+Purchases,Extra
+Finance,Loans
+Finance,Extra
+Spam,Extra
+Travel,Flights
+Extra,Family & Pets
+Promotions,Giveaways
+Travel,Extra
+Education,Courses
+Education,Extra
+Promotions,Surveys
+Education,Competitions
+Purchases,Food Delivery
+Education,Assignments
+Promotions,Giveaways
+Finance,Taxes
+Work,Meetings
+Social,Dating
+Work,Infrastructure
+Security,Passwords
+Promotions,Product Updates
+Travel,Transit
+Spam,Malware
+Finance,Bills & Utilities
+Spam,Extra
+Education,Courses
+Purchases,Orders
+Promotions,Giveaways
+Purchases,Receipts
+Purchases,Shipping
+Finance,Loans
+Extra,Real Estate
+Education,Competitions
+Finance,Investments
+Security,Passwords
+Social,Dating
+Extra,Family & Pets
+Work,Job Search
+Spam,Malware
+Spam,Phishing
+Social,Community
+Work,External
+Promotions,Product Updates
+Spam,Scams
+Work,Extra
+Finance,Taxes
+Security,Alerts
+Promotions,Surveys
+Promotions,Fundraising
+Finance,Banking
+Extra,Health & Medical
+Purchases,Subscriptions
+Work,Job Search
+Security,Passwords
+Social,Dating
+Spam,Fake Invoices
+Finance,Bills & Utilities
+Security,Backups
+Social,Extra
+Education,Seminars
+Promotions,Surveys
+Purchases,Subscriptions
+Extra,Real Estate
+Promotions,Surveys
+Education,Research
+Extra,Hobbies
+Security,Backups
+Travel,Visas
+Purchases,Shipping
+Security,Alerts
+Education,Research
+Social,Personal
+Security,Licenses
+Education,Seminars
+Extra,Legal & Civic
+Purchases,Receipts
+Travel,Extra
+Extra,Family & Pets
+Purchases,Receipts
+Promotions,Extra
+Social,Extra
+Work,Extra
+Education,Certifications
+Social,Dating
+Education,Courses
+Social,Platforms
+Security,Privacy
+Spam,Extra
+Security,Backups
+Promotions,Fundraising
+Social,Greetings
+Finance,Investments
+Finance,Bills & Utilities
+Promotions,Newsletters
+Extra,Health & Medical
+Promotions,Product Updates
+Spam,Malware
+Education,Research
+Social,Greetings
+Purchases,Orders
+Travel,Itineraries
+Travel,Accommodations
+Purchases,Refunds
+Spam,Fake Invoices
+Finance,Extra
+Finance,Extra
+Work,Meetings
+Extra,Fitness
+Social,Platforms
+Finance,Banking
+Security,OTP & 2FA
+Social,Extra
+Promotions,Giveaways
+Social,Events
+Spam,Junk Mail
+Work,External
+Security,OTP & 2FA
+Extra,Extra
+Extra,Hobbies
+Work,Extra
+Extra,Legal & Civic
+Extra,Hobbies
+Finance,Taxes
+Spam,Scams
+Spam,Malware
+Travel,Flights
+Purchases,Subscriptions
+Work,Extra
+Work,External
+Travel,Rewards
+Promotions,Product Updates
+Security,Passwords
+Purchases,Subscriptions
