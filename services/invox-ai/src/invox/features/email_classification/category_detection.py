@@ -1,11 +1,15 @@
 import sys
 import os
+from dotenv import load_dotenv
 from huggingface_hub import hf_hub_download
 from llama_cpp import Llama
 from invox.features.email_classification.categories import (
     get_parent_labels,
     get_child_labels,
 )
+
+# Load environment variables from the .env file
+load_dotenv()
 
 print(
     "  -> [Gemma Router] Locating optimized GGUF weights for CPU inference...",
@@ -17,7 +21,7 @@ print(
 model_path = hf_hub_download(
     repo_id="bartowski/gemma-2-9b-it-GGUF",
     filename="gemma-2-9b-it-Q4_K_M.gguf",
-    token=os.environ.get("HF_TOKEN", "REMOVED"),
+    token=os.getenv("HF_TOKEN"),  # Securely fetches the token from .env
 )
 
 print(

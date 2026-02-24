@@ -1,14 +1,37 @@
-#!/usr/bin/env python3
+# TODO:
+# HACK:
+"""
+=============================================================================
+🚀 FUTURE OPTIMIZATION & DEPLOYMENT ROADMAP
+=============================================================================
+1. Fine-Tuning (LoRA):
+   - Train a LoRA adapter on the base HF model (google/gemma-2-9b-it) to
+     learn specific edge cases.
+   - Merge the adapter with the base weights.
+   - Export the merged model to a custom .gguf for deployment.
+
+2. GPU Server Deployment (Scalability):
+   - Engine: Replace llama.cpp with vLLM for maximum GPU throughput.
+   - Precision: Upgrade to native bfloat16 (needs ~24GB VRAM) for max
+     accuracy, or use AWQ/FP8 quantization (GPU-optimized compression).
+   - Throughput: Implement Continuous Batching (feed 50+ emails at once
+     via API instead of sequential loops).
+=============================================================================
+"""
+
+# !/usr/bin/env python3
 import sys
 import os
 import traceback
-
-# ===== GLOBAL TOKEN & VERBOSE CONFIG =====
-# Removed all silencing logic. Hugging Face will now log natively.
-os.environ["HF_TOKEN"] = "REMOVED"
-
-# Force transformers to show info (loading weights, etc.)
+from dotenv import load_dotenv
 from transformers import logging as hf_logging
+
+# This automatically finds your .env file and loads the variables into the system
+load_dotenv()
+
+# Now you can safely grab the token without hardcoding it
+HF_TOKEN = os.getenv("HF_TOKEN")
+
 
 hf_logging.set_verbosity_info()
 
