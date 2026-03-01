@@ -2,7 +2,6 @@
 set -euo pipefail
 
 # ===================== ERROR HANDLER =====================
-
 error_exit() {
     echo -e "\n\033[31mERROR:\033[0m $1"
     cleanup_terminal
@@ -10,20 +9,19 @@ error_exit() {
 }
 
 # ===================== CONFIG =====================
-
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../../../../.." && pwd)"
 
-# Point to the local email_dataset next to the script
 DATASET_DIR="$SCRIPT_DIR/email_dataset"
 ANSWERS_FILE="$DATASET_DIR/answer.txt"
 
 SERVICE_PATH="$PROJECT_ROOT/services/invox-ai/src/invox/features/email_classification/service.py"
 export PYTHONPATH="$PROJECT_ROOT/services/invox-ai/src"
+
+# Use the globally active environment (Conda in Lightning Studio)
 PYTHON_BIN="$PROJECT_ROOT/.venv/bin/python"
 
 # ===================== COLORS =====================
-
 RESET=$'\033[0m'
 BOLD=$'\033[1m'
 BLUE=$'\033[34m'
@@ -33,34 +31,13 @@ YELLOW=$'\033[33m'
 CYAN=$'\033[36m'
 
 # ===================== TERMINAL SAFETY =====================
-
 cleanup_terminal() {
     stty echo 2>/dev/null || true
     tput cnorm 2>/dev/null || true
 }
 trap cleanup_terminal EXIT
 
-spinner_with_label() {
-    local pid=$1
-    local label="$2"
-    local spin='|/-\'
-
-    stty -echo -icanon 2>/dev/null || true
-    tput civis 2>/dev/null || true
-
-    while kill -0 "$pid" 2>/dev/null; do
-        for i in {0..3}; do
-            printf "\r${CYAN}Running %-30s ${spin:$i:1}${RESET}" "$label"
-            sleep 0.08
-        done
-    done
-
-    printf "\r%*s\r" 80 ""
-    cleanup_terminal
-}
-
 # ===================== VALIDATE DATASET =====================
-
 [[ -d "$DATASET_DIR" ]] || error_exit "Dataset directory missing: $DATASET_DIR"
 [[ -f "$ANSWERS_FILE" ]] || error_exit "answers.txt missing in $DATASET_DIR"
 
@@ -69,7 +46,6 @@ if [ ${#ANSWERS[@]} -eq 0 ]; then
     error_exit "answers.txt is empty"
 fi
 
-# Collect only numbered txt files (supports both 01.txt and 001.txt)
 ALL_EMAILS=()
 while IFS= read -r file; do
     base=$(basename "$file")
@@ -83,7 +59,6 @@ if [ ${#ALL_EMAILS[@]} -eq 0 ]; then
 fi
 
 # ===================== RANDOM SELECTION =====================
-
 LIMIT="${1:-"-all"}"
 
 if [[ "$LIMIT" != "-all" ]]; then
@@ -103,31 +78,34 @@ else
 fi
 
 # ===================== METRICS =====================
-
 FULL_PASS=0
 PARTIAL_PASS=0
 FULL_FAIL=0
-TOTAL_TIME_NS=0
+TOTAL_TIME_SEC=0
 TOTAL_RUNS=0
 
 # ===================== HEADER =====================
-
 echo
 echo -e "${BOLD}${BLUE}========= EMAIL CLASSIFICATION BENCHMARK =========${RESET}"
+echo -e "${YELLOW}Loading AI model into VRAM... (This takes a few seconds)${RESET}"
 echo
 printf "+--------------+------------------------+-----------+------------------------+--------+\n"
 printf "| %-12s | %-22s | %-9s | %-22s | %-6s |\n" \
     "Email" "Prediction" "Time" "Actual" "Match"
 printf "+--------------+------------------------+-----------+------------------------+--------+\n"
 
-# ===================== MAIN LOOP =====================
+# ===================== MAIN BATCH STREAM =====================
 
-for email in "${EMAILS[@]}"; do
+# We run Python ONCE with all files. 
+# It streams data out. The while loop catches it and draws the table in real-time.
+while IFS='|' read -r prefix filename pred_cat pred_sub elapsed_sec; do
+    
+    # Ignore any standard logs, only process lines starting with "RESULT|"
+    if [[ "$prefix" != "RESULT" ]]; then
+        continue
+    fi
 
-    filename=$(basename "$email")
     id="${filename%.txt}"
-
-    # Base 10 conversion to prevent octal errors on 008/009
     index=$((10#$id - 1))
     
     if [ "$index" -ge "${#ANSWERS[@]}" ]; then
@@ -136,7 +114,6 @@ for email in "${EMAILS[@]}"; do
 
     actual_line="${ANSWERS[$index]}"
     
-    # Auto-detect comma vs hyphen formatted answers
     if [[ "$actual_line" == *","* ]]; then
         actual_cat=$(echo "$actual_line" | cut -d',' -f1 | xargs)
         actual_sub=$(echo "$actual_line" | cut -d',' -f2 | xargs)
@@ -145,34 +122,10 @@ for email in "${EMAILS[@]}"; do
         actual_sub=$(echo "$actual_line" | awk -F ' - ' '{print $2}' | xargs)
     fi
 
-    tmpfile=$(mktemp)
-    start_ns=$(date +%s%N)
-
-    "$PYTHON_BIN" "$SERVICE_PATH" "$email" > "$tmpfile" 2>&1 &
-    pid=$!
-    spinner_with_label "$pid" "$filename"
-    wait $pid || true 
-
-    end_ns=$(date +%s%N)
-    elapsed_ns=$((end_ns - start_ns))
-    TOTAL_TIME_NS=$((TOTAL_TIME_NS + elapsed_ns))
-
-    elapsed_sec=$(awk -v ns="$elapsed_ns" 'BEGIN {printf "%.2f", ns / 1000000000}')
-    output=$(cat "$tmpfile")
-    rm -f "$tmpfile"
-
-    pred_cat=$(echo "$output" | grep -i '^cat:' | sed -E 's/^cat:\s*//' | xargs || true)
-    pred_sub=$(echo "$output" | grep -i '^subcat:' | sed -E 's/^subcat:\s*//' | xargs || true)
-
-    if [[ -z "$pred_cat" ]]; then
-         pred_cat="Error"
-         pred_sub="ParsingFailed"
-    fi
-
     prediction="${pred_cat},${pred_sub}"
     actual="${actual_cat},${actual_sub}"
 
-    # Safe Arithmetic (No ((VAR++)) so set -e doesn't kill the script)
+    # Score calculation
     if [[ "$pred_cat" == "$actual_cat" && "$pred_sub" == "$actual_sub" ]]; then
         match=100
         color=$GREEN
@@ -188,22 +141,23 @@ for email in "${EMAILS[@]}"; do
     fi
 
     TOTAL_RUNS=$((TOTAL_RUNS + 1))
+    TOTAL_TIME_SEC=$(awk -v total="$TOTAL_TIME_SEC" -v current="$elapsed_sec" 'BEGIN {print total + current}')
 
     printf "| %-12s | %-22s | %-9s | %-22s | ${color}%-6s${RESET} |\n" \
         "$filename" "$prediction" "${elapsed_sec}s" "$actual" "$match"
 
     printf "+--------------+------------------------+-----------+------------------------+--------+\n"
 
-done
+done < <("$PYTHON_BIN" "$SERVICE_PATH" "${EMAILS[@]}" 2>/dev/null) 
+# Note: 2>/dev/null hides the massive Hugging Face warnings from destroying the table visually.
 
 if [ "$TOTAL_RUNS" -eq 0 ]; then
-    error_exit "No emails processed"
+    error_exit "No emails processed. Check Python script."
 fi
 
-avg_sec=$(awk -v ns="$TOTAL_TIME_NS" -v runs="$TOTAL_RUNS" 'BEGIN {printf "%.3f", ns / runs / 1000000000}')
+avg_sec=$(awk -v total="$TOTAL_TIME_SEC" -v runs="$TOTAL_RUNS" 'BEGIN {printf "%.3f", total / runs}')
 
 # ===================== FINAL METRICS =====================
-
 echo
 echo -e "${BOLD}${CYAN}============= FINAL METRICS =============${RESET}"
 echo
