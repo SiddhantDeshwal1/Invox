@@ -5,5 +5,5 @@ testing/Model_Testing/sample_email.txt
 .envrc
 .hf/
 .pipcache/
-
+.npmcache/
 .aider*
