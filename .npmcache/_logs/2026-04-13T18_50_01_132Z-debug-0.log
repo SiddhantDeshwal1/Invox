@@ -1,0 +1,19 @@
+0 verbose cli /usr/bin/node /usr/bin/npm
+1 info using npm@11.12.1
+2 info using node@v25.9.0
+3 silly config load:file:/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/home/man37/.npmrc
+5 silly config load:file:/etc/npmrc
+6 verbose title npm list
+7 verbose argv "list" "--global" "--depth" "0"
+8 verbose logfile logs-max:10 dir:/run/media/man37/Alpha/project/Invox/.npmcache/_logs/2026-04-13T18_50_01_132Z-
+9 verbose logfile /run/media/man37/Alpha/project/Invox/.npmcache/_logs/2026-04-13T18_50_01_132Z-debug-0.log
+10 silly packumentCache heap:2348810240 maxSize:587202560 maxEntrySize:293601280
+11 silly logfile done cleaning log files
+12 http fetch GET 200 https://registry.npmjs.org/npm 473ms
+13 verbose cwd /run/media/man37/Alpha/project/Invox
+14 verbose os Linux 6.19.12-1-cachyos
+15 verbose node v25.9.0
+16 verbose npm  v11.12.1
+17 verbose exit 0
+18 info ok

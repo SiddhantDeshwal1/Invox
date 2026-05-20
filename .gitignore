@@ -6,3 +6,4 @@ testing/Model_Testing/sample_email.txt
 .hf/
 .pipcache/
 
+.aider*
